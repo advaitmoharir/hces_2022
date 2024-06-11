@@ -1,6 +1,6 @@
 # Household Consumption and Expenditure Survey 2022-23
 
-This repository consists of the clean data dump generated from the latest household consumption and expenditure survey (HCES), by the NSS. The raw microdata is publicly accessible and can be downloaded [here][https://microdata.gov.in/nada43/index.php/catalog/194].
+This repository consists of the clean data dump generated from the latest household consumption and expenditure survey (HCES), by the NSS. The raw microdata is publicly accessible and can be downloaded [here](https://microdata.gov.in/nada43/index.php/catalog/194).
 
 ## Repo Structure
 
