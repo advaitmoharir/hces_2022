@@ -14,7 +14,7 @@ Date: 09/06/2024
 import delimited using "$raw/hces22_lvl_01.txt",clear
 
 // Extract relevant identifiers using "Layout_HCES_2022-23.xlslx"
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen survey_name=substr(v1,1,4)
 gen year=substr(v1,5,4)
 gen fsu_serial_no=substr(v1,9,5)
@@ -38,10 +38,10 @@ gen subcode_reason=substr(v1,43,1)
 gen multiplier=substr(v1,44,15)
 
 // destring and cleanup
-
+gen hhid=fsu_serial_no+sec_stage_stratum_num+sample_hhld_num
 drop v1
-destring year-sample_subdiv_num level-multiplier,force replace
-
+destring year-sample_subdiv_num level-multiplier hhid,force replace
+order hhid
 // Save
 
 save "$clean/level_01.dta", replace
@@ -55,7 +55,7 @@ import delimited using "$raw/hces22_lvl_02.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen person_id=substr(v1,42,2)
@@ -77,10 +77,14 @@ gen member_status=substr(v1,68,1)
 gen original_member=substr(v1,69,1)
 gen multiplier=substr(v1,70,15)
 
-drop v1
-destring level-multiplier,force replace
 
 
+// Get hhid
+
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 // Save
 
 save "$clean/level_02.dta", replace
@@ -94,7 +98,7 @@ import delimited using "$raw/hces22_lvl_03.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen hh_size=substr(v1,42,2)
@@ -129,10 +133,12 @@ gen has_young_died=substr(v1,90,1)
 gen num_young_died=substr(v1,91,1)
 gen multiplier=substr(v1,93,15)
 
-// destring
+// Get hhid
 
-drop v1
-destring level-multiplier, force replace
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 
 //save
 
@@ -146,7 +152,7 @@ import delimited using "$raw/hces22_lvl_04.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen used_ration=substr(v1,42,1)
@@ -170,9 +176,12 @@ gen performed_ceremony=substr(v1,59,1)
 gen meals_nonhh=substr(v1,60,4)
 gen multiplier=substr(v1,64,15)
 
-// destring
-drop v1
-destring level-multiplier, force replace
+// Get hhid
+
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 
 //save
 
@@ -186,7 +195,7 @@ import delimited using "$raw/hces22_lvl_05.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen item_code=substr(v1,42,3)
@@ -197,9 +206,12 @@ gen cons_total_value=substr(v1,73,8)
 gen source=substr(v1,81,1)
 gen multiplier=substr(v1,82,15)
 
-// destring
-drop v1
-destring level-multiplier, force replace
+// Get hhid
+
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 
 //save
 
@@ -213,7 +225,7 @@ import delimited using "$raw/hces22_lvl_06.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen item_code=substr(v1,42,3)
@@ -222,9 +234,12 @@ gen cons_total_value=substr(v1,55,8)
 gen source=substr(v1,63,1)
 gen multiplier=substr(v1,64,15)
 
-// destring
-drop v1
-destring level-multiplier, force replace
+// Get hhid
+
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 
 //save
 
@@ -239,7 +254,7 @@ import delimited using "$raw/hces22_lvl_07.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen procured_kerosene_ration =substr(v1,42,1)
@@ -275,9 +290,12 @@ gen multiplier=substr(v1,94,15)
 
 
 
-// destring
-drop v1
-destring level-multiplier, force replace
+// Get hhid
+
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 
 //save
 
@@ -292,7 +310,7 @@ import delimited using "$raw/hces22_lvl_08.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen item_code=substr(v1,42,3)
@@ -303,9 +321,12 @@ gen cons_total_value=substr(v1,73,8)
 gen source=substr(v1,81,1)
 gen multiplier=substr(v1,82,15)
 
-// destring
-drop v1
-destring level-multiplier, force replace
+// Get hhid
+
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 
 //save
 
@@ -321,16 +342,19 @@ import delimited using "$raw/hces22_lvl_09.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen item_code=substr(v1,42,3)
 gen cons_total_value=substr(v1,45,8)
 gen multiplier=substr(v1,53,15)
 
-// destring
-drop v1
-destring level-multiplier, force replace
+// Get hhid
+
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 
 //save
 
@@ -343,8 +367,7 @@ save "$clean/level_09", replace
 import delimited using "$raw/hces22_lvl_10.txt",clear
 
 // Cleanup
-
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen item_code=substr(v1,42,3)
@@ -355,9 +378,12 @@ gen cons_total_value=substr(v1,73,8)
 gen source=substr(v1,81,1)
 gen multiplier=substr(v1,82,15)
 
-// destring
-drop v1
-destring level-multiplier, force replace
+// Get hhid
+
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 
 //save
 
@@ -371,7 +397,7 @@ import delimited using "$raw/hces22_lvl_11.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen online_clothing=substr(v1,42,1)
@@ -417,10 +443,12 @@ gen type_tv=substr(v1,97,1)
 gen multiplier=substr(v1,98,15)
 
 
-// destring
-drop v1
-destring level-multiplier, force replace
+// Get hhid
 
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 
 
 
@@ -437,7 +465,7 @@ import delimited using "$raw/hces22_lvl_12.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen item_code=substr(v1,42,3)
@@ -445,10 +473,12 @@ gen cons_total_qty=substr(v1,45,10)
 gen cons_total_value=substr(v1,55,8)
 gen multiplier=substr(v1,63,15)
 
-// destring
-drop v1
-destring level-multiplier, force replace
+// Get hhid
 
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 //save
 
 save "$clean/level_12", replace
@@ -461,7 +491,7 @@ import delimited using "$raw/hces22_lvl_13.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen item_code=substr(v1,42,3)
@@ -474,9 +504,12 @@ gen val_secondhand_purchase=substr(v1,68,8)
 gen tot_expenditure=substr(v1,76,8)
 gen multiplier=substr(v1,84,15)
 
-// destring
-drop v1
-destring level-multiplier, force replace
+// Get hhid
+
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 
 //save
 
@@ -492,17 +525,20 @@ import delimited using "$raw/hces22_lvl_14.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen section=substr(v1,42,5)
 gen item_code=substr(v1,47,3)
 gen value=substr(v1,50,10)
 gen multiplier=substr(v1,60,15)
-// destring
-drop v1
-destring level-multiplier, force replace
 
+// Get hhid
+
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 //save
 
 save "$clean/level_14", replace
@@ -516,7 +552,7 @@ import delimited using "$raw/hces22_lvl_15.txt",clear
 
 // Cleanup
 
-gen hhid=substr(v1,1,38)
+gen common_id=substr(v1,1,38)
 gen questionnaire_num=substr(v1,39,1)
 gen level=substr(v1,40,2)
 gen section=substr(v1,42,2)
@@ -527,9 +563,12 @@ gen informant_code=substr(v1,63,2)
 gen response_code=substr(v1,65,1)
 gen hh_size=substr(v1,66,3)
 gen multiplier=substr(v1,69,15)
-// destring
-drop v1
-destring level-multiplier, force replace
+// Get hhid
+
+merge m:1 common_id using "$clean/level_01", force nogen keep(3) keepusing(hhid)
+drop v1 common_id
+destring level-hhid,force replace
+order hhid
 
 //save
 
