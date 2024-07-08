@@ -575,8 +575,15 @@ order hhid
 save "$clean/level_15", replace
 
 
+// Export all as csv
 
 
 
+local vals "01 02 03 04 05 06 07 08 09 10 11 12 13 14 15"
+
+foreach i in `vals'{
+	use "$clean/level_`i'", clear
+	export delimited using "$clean/level_`i'.csv", replace
+}
 
 
