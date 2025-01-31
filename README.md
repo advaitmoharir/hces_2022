@@ -1,6 +1,6 @@
 # Household Consumption and Expenditure Survey 2022-23
 
-This repository consists of the clean data dump generated from the latest household consumption and expenditure survey (HCES), by the NSS. The raw microdata is publicly accessible and can be downloaded [here](https://microdata.gov.in/nada43/index.php/catalog/194).
+This repository consists of the clean data dump generated from the latest household consumption and expenditure survey (HCES), by the NSS. The raw microdata is publicly accessible and can be downloaded [here](https://microdata.gov.in/nada43/index.php/catalog/224).
 
 ## Repo Structure
 
@@ -26,7 +26,7 @@ The folder `02_code` has the following files
 To generate the files in `04_output`, do the following
 
 1. Download and unzip the repo
-2. Create a folder called `3_raw` and add the raw txt files from the NSS site, available [here](https://microdata.gov.in/nada43/index.php/catalog/194). You should get 15 .txt files.
+2. Create a folder called `3_raw` and add the raw txt files from the NSS site, available [here](https://microdata.gov.in/nada43/index.php/catalog/224). You should get 15 .txt files.
 3. Open the state project `hces.stpr`. From within the project, run first `0_master`, followed by `1_clean`
 4. This creates Stata and csv files for each level
 5. [OPTIONAL] If you want to get Parquet files, run the `convert_csv` file (change directory as needed) to do so.
